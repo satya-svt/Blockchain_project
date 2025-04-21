@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 252 95% 99%;
+    --foreground: 252 8% 25%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 252 8% 25%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 252 8% 25%;
+
+    --primary: 252 76% 75%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 252 8% 25%;
+
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 252 8% 25%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 252 76% 75%;
+
+    --radius: 1rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+}
+
+@layer components {
+  .glassmorphism {
+    @apply bg-white/60 backdrop-blur-md border border-white/20 shadow-lg;
+  }
+  
+  .card-gradient {
+    @apply bg-gradient-to-br from-white to-genechain-light-purple/30;
+  }
+
+  .btn-gradient {
+    @apply bg-gradient-to-r from-genechain-purple to-genechain-blue text-white;
+  }
+}
