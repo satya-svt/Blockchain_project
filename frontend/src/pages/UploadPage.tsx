@@ -1,141 +1,185 @@
+
 import React, { useState } from 'react';
-import { Upload, AlertCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Checkbox } from '@/components/ui/checkbox';
+import FileUploader from '@/components/upload/FileUploader';
+import { useToast } from '@/hooks/use-toast';
 
-const UploadPage: React.FC = () => {
-  const [dragActive, setDragActive] = useState(false);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
-  const handleDrag = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.type === "dragenter" || e.type === "dragover") {
-      setDragActive(true);
-    } else if (e.type === "dragleave") {
-      setDragActive(false);
-    }
+const UploadPage = () => {
+  const [file, setFile] = useState<File | null>(null);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [accessLevel, setAccessLevel] = useState('private');
+  const [consentResearch, setConsentResearch] = useState(false);
+  const [consentTerms, setConsentTerms] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  
+  const { toast } = useToast();
+  
+  const handleFileSelect = (selectedFile: File) => {
+    setFile(selectedFile);
   };
-
-  const handleDrop = (e: React.DragEvent) => {
+  
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    e.stopPropagation();
-    setDragActive(false);
     
-    const files = e.dataTransfer.files;
-    if (files?.[0]) {
-      setSelectedFile(files[0]);
+    if (!file) {
+      toast({
+        title: "Missing file",
+        description: "Please upload a genome file to continue.",
+        variant: "destructive",
+      });
+      return;
     }
-  };
-
-  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files?.[0]) {
-      setSelectedFile(e.target.files[0]);
+    
+    if (!name || !email || !consentTerms) {
+      toast({
+        title: "Missing information",
+        description: "Please fill in all required fields and accept the terms.",
+        variant: "destructive",
+      });
+      return;
     }
+    
+    setIsUploading(true);
+    
+    // Simulate upload process
+    setTimeout(() => {
+      toast({
+        title: "Upload successful!",
+        description: "Your genome file has been uploaded and your NFT is being minted.",
+      });
+      setIsUploading(false);
+      
+      // Redirect to dashboard after successful upload
+      setTimeout(() => {
+        window.location.href = '/dashboard';
+      }, 2000);
+    }, 3000);
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
-      <div className="text-center">
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">Upload Your Genome</h1>
-        <p className="text-gray-600">
-          Upload your genetic data file to create your genome NFT. We support .txt and .vcf formats.
-        </p>
+    <div className="pt-24 pb-16">
+      <div className="container mx-auto px-4">
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-10">
+            <h1 className="text-3xl font-bold text-genechain-dark mb-3">Upload Your Genome</h1>
+            <p className="text-genechain-dark/70">
+              Your genomic data will be encrypted and stored securely. Create an NFT to prove ownership and control access.
+            </p>
+          </div>
+          
+          <div className="glassmorphism rounded-xl p-6 md:p-8">
+            <form onSubmit={handleSubmit} className="space-y-8">
+              <div>
+                <h2 className="text-xl font-medium text-genechain-dark mb-4">1. Upload Genome File</h2>
+                <FileUploader onFileSelect={handleFileSelect} />
+              </div>
+              
+              <div>
+                <h2 className="text-xl font-medium text-genechain-dark mb-4">2. User Information</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="name">Name</Label>
+                    <Input 
+                      id="name" 
+                      value={name} 
+                      onChange={(e) => setName(e.target.value)} 
+                      placeholder="Your name"
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Email</Label>
+                    <Input 
+                      id="email" 
+                      type="email" 
+                      value={email} 
+                      onChange={(e) => setEmail(e.target.value)} 
+                      placeholder="your.email@example.com"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <h2 className="text-xl font-medium text-genechain-dark mb-4">3. Access Control</h2>
+                <div className="space-y-2">
+                  <Label htmlFor="access-level">Who can access your data?</Label>
+                  <Select 
+                    value={accessLevel} 
+                    onValueChange={setAccessLevel}
+                  >
+                    <SelectTrigger id="access-level" className="w-full">
+                      <SelectValue placeholder="Select access level" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="open">Open (Anyone can access)</SelectItem>
+                      <SelectItem value="researchers">Only approved researchers</SelectItem>
+                      <SelectItem value="private">Private (Only you)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              
+              <div>
+                <h2 className="text-xl font-medium text-genechain-dark mb-4">4. Consent</h2>
+                <div className="space-y-4">
+                  <div className="flex items-start space-x-3">
+                    <Checkbox 
+                      id="consent-research" 
+                      checked={consentResearch}
+                      onCheckedChange={(checked) => setConsentResearch(checked as boolean)}
+                    />
+                    <div>
+                      <Label 
+                        htmlFor="consent-research" 
+                        className="text-sm font-normal leading-tight cursor-pointer"
+                      >
+                        I consent to my anonymized genetic data being used for scientific research purposes that I explicitly approve.
+                      </Label>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start space-x-3">
+                    <Checkbox 
+                      id="consent-terms" 
+                      checked={consentTerms}
+                      onCheckedChange={(checked) => setConsentTerms(checked as boolean)}
+                      required
+                    />
+                    <div>
+                      <Label 
+                        htmlFor="consent-terms" 
+                        className="text-sm font-normal leading-tight cursor-pointer"
+                      >
+                        I agree to the GeneChain Terms of Service and Privacy Policy. I understand that I retain ownership of my genetic data.
+                      </Label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="pt-4">
+                <Button 
+                  type="submit" 
+                  className="btn-gradient w-full py-6"
+                  disabled={isUploading}
+                >
+                  {isUploading ? "Processing..." : "Upload to IPFS & Mint NFT"}
+                </Button>
+                <p className="text-xs text-center mt-4 text-genechain-dark/50">
+                  This will require a wallet connection and transaction approval.
+                </p>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
-
-      {/* Upload Area */}
-      <div
-        className={`border-2 border-dashed rounded-lg p-8 text-center ${
-          dragActive ? 'border-purple-600 bg-purple-50' : 'border-gray-300'
-        }`}
-        onDragEnter={handleDrag}
-        onDragLeave={handleDrag}
-        onDragOver={handleDrag}
-        onDrop={handleDrop}
-      >
-        <Upload
-          size={48}
-          className={`mx-auto mb-4 ${
-            dragActive ? 'text-purple-600' : 'text-gray-400'
-          }`}
-        />
-        <p className="text-lg mb-2">
-          {selectedFile
-            ? `Selected: ${selectedFile.name}`
-            : 'Drag and drop your genome file here'}
-        </p>
-        <p className="text-sm text-gray-500 mb-4">or</p>
-        <label className="bg-purple-600 text-white px-6 py-2 rounded-lg cursor-pointer hover:bg-purple-700 transition-colors">
-          Browse Files
-          <input
-            type="file"
-            className="hidden"
-            accept=".txt,.vcf"
-            onChange={handleFileSelect}
-          />
-        </label>
-      </div>
-
-      {/* Metadata Form */}
-      <form className="bg-white rounded-lg p-8 shadow-lg space-y-6">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Full Name
-          </label>
-          <input
-            type="text"
-            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-            placeholder="John Doe"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Email
-          </label>
-          <input
-            type="email"
-            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-            placeholder="john@example.com"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Data Access Level
-          </label>
-          <select className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent">
-            <option value="private">Private</option>
-            <option value="approved">Only Approved Researchers</option>
-            <option value="open">Open Access</option>
-          </select>
-        </div>
-
-        <div className="flex items-start space-x-2">
-          <input
-            type="checkbox"
-            id="consent"
-            className="mt-1"
-          />
-          <label htmlFor="consent" className="text-sm text-gray-600">
-            I consent to the storage and processing of my genetic data according to
-            the terms of service and privacy policy.
-          </label>
-        </div>
-
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-start space-x-3">
-          <AlertCircle className="text-blue-500 flex-shrink-0" />
-          <p className="text-sm text-blue-700">
-            Your data will be encrypted and stored on IPFS. You'll maintain full
-            control through your NFT and can revoke access at any time.
-          </p>
-        </div>
-
-        <button
-          type="submit"
-          className="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 transition-colors"
-        >
-          Upload to IPFS & Mint NFT
-        </button>
-      </form>
     </div>
   );
 };
