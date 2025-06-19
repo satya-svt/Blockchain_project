@@ -1,7 +1,7 @@
 
 # 🧬 Blockchain-Based Genome Ownership System
 
-![DNA Animation](https://media.giphy.com/media/26n6WywJyh39n1pBu/giphy.gif)
+![DNA Animation](https://www.google.com/url?sa=i&url=https%3A%2F%2Fmx.pinterest.com%2Fpin%2F695243261245677864%2F&psig=AOvVaw1w6LD0w2PuPCIW-z5vWXeB&ust=1750441951132000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCIDV0M-G_o0DFQAAAAAdAAAAABA8)
 
 A **decentralized genome ownership** platform that utilizes **blockchain technology** to securely store and manage genetic data. This system allows individuals to mint **NFTs (Non-Fungible Tokens)** that represent and prove ownership of their genomic information.
 
