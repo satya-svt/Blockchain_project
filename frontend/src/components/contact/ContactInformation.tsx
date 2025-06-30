@@ -9,27 +9,27 @@ const ContactInformation = () => {
         <div className="space-y-3">
           <div>
             <h3 className="font-medium">Email</h3>
-            <p className="text-genechain-dark/70">contact@genechain.io</p>
+            <p className="text-genechain-dark/70">satyavardhanthinnaluri@gmail.com</p>
           </div>
           <div>
             <h3 className="font-medium">Location</h3>
-            <p className="text-genechain-dark/70">San Francisco, CA</p>
+            <p className="text-genechain-dark/70">Andhra Pradesh, India</p>
           </div>
         </div>
       </div>
-      
+
       <div>
         <h2 className="text-xl font-medium text-genechain-dark mb-3">For Researchers</h2>
         <p className="text-genechain-dark/70 mb-3">
           If you're interested in accessing genomic data for research purposes, please email:
         </p>
-        <p className="font-medium">research@genechain.io</p>
+        <p className="font-medium">satyavardhanthinnaluri@gmail.com</p>
       </div>
-      
+
       <div>
         <h2 className="text-xl font-medium text-genechain-dark mb-3">Support Hours</h2>
         <p className="text-genechain-dark/70">
-          Monday - Friday: 9AM - 6PM PST<br />
+          Monday - Friday: 9AM - 6PM IST<br />
           Saturday - Sunday: Closed
         </p>
       </div>
