@@ -16,16 +16,16 @@ const UploadPage = () => {
   const [consentResearch, setConsentResearch] = useState(false);
   const [consentTerms, setConsentTerms] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
-  
+
   const { toast } = useToast();
-  
+
   const handleFileSelect = (selectedFile: File) => {
     setFile(selectedFile);
   };
-  
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!file) {
       toast({
         title: "Missing file",
@@ -34,7 +34,7 @@ const UploadPage = () => {
       });
       return;
     }
-    
+
     if (!name || !email || !consentTerms) {
       toast({
         title: "Missing information",
@@ -43,9 +43,9 @@ const UploadPage = () => {
       });
       return;
     }
-    
+
     setIsUploading(true);
-    
+
     // Simulate upload process
     setTimeout(() => {
       toast({
@@ -53,7 +53,7 @@ const UploadPage = () => {
         description: "Your genome file has been uploaded and your NFT is being minted.",
       });
       setIsUploading(false);
-      
+
       // Redirect to dashboard after successful upload
       setTimeout(() => {
         window.location.href = '/dashboard';
@@ -71,47 +71,47 @@ const UploadPage = () => {
               Your genomic data will be encrypted and stored securely. Create an NFT to prove ownership and control access.
             </p>
           </div>
-          
+
           <div className="glassmorphism rounded-xl p-6 md:p-8">
             <form onSubmit={handleSubmit} className="space-y-8">
               <div>
                 <h2 className="text-xl font-medium text-genechain-dark mb-4">1. Upload Genome File</h2>
                 <FileUploader onFileSelect={handleFileSelect} />
               </div>
-              
+
               <div>
                 <h2 className="text-xl font-medium text-genechain-dark mb-4">2. User Information</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <Label htmlFor="name">Name</Label>
-                    <Input 
-                      id="name" 
-                      value={name} 
-                      onChange={(e) => setName(e.target.value)} 
+                    <Input
+                      id="name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
                       placeholder="Your name"
                       required
                     />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="email">Email</Label>
-                    <Input 
-                      id="email" 
-                      type="email" 
-                      value={email} 
-                      onChange={(e) => setEmail(e.target.value)} 
+                    <Input
+                      id="email"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       placeholder="your.email@example.com"
                       required
                     />
                   </div>
                 </div>
               </div>
-              
+
               <div>
                 <h2 className="text-xl font-medium text-genechain-dark mb-4">3. Access Control</h2>
                 <div className="space-y-2">
                   <Label htmlFor="access-level">Who can access your data?</Label>
-                  <Select 
-                    value={accessLevel} 
+                  <Select
+                    value={accessLevel}
                     onValueChange={setAccessLevel}
                   >
                     <SelectTrigger id="access-level" className="w-full">
@@ -125,36 +125,36 @@ const UploadPage = () => {
                   </Select>
                 </div>
               </div>
-              
+
               <div>
                 <h2 className="text-xl font-medium text-genechain-dark mb-4">4. Consent</h2>
                 <div className="space-y-4">
                   <div className="flex items-start space-x-3">
-                    <Checkbox 
-                      id="consent-research" 
+                    <Checkbox
+                      id="consent-research"
                       checked={consentResearch}
                       onCheckedChange={(checked) => setConsentResearch(checked as boolean)}
                     />
                     <div>
-                      <Label 
-                        htmlFor="consent-research" 
+                      <Label
+                        htmlFor="consent-research"
                         className="text-sm font-normal leading-tight cursor-pointer"
                       >
                         I consent to my anonymized genetic data being used for scientific research purposes that I explicitly approve.
                       </Label>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start space-x-3">
-                    <Checkbox 
-                      id="consent-terms" 
+                    <Checkbox
+                      id="consent-terms"
                       checked={consentTerms}
                       onCheckedChange={(checked) => setConsentTerms(checked as boolean)}
                       required
                     />
                     <div>
-                      <Label 
-                        htmlFor="consent-terms" 
+                      <Label
+                        htmlFor="consent-terms"
                         className="text-sm font-normal leading-tight cursor-pointer"
                       >
                         I agree to the GeneChain Terms of Service and Privacy Policy. I understand that I retain ownership of my genetic data.
@@ -163,10 +163,10 @@ const UploadPage = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div className="pt-4">
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   className="btn-gradient w-full py-6"
                   disabled={isUploading}
                 >
