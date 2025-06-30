@@ -1,0 +1,18 @@
+{
+    "id": "sample123",
+    "individual": {
+        "name": "Satya Vardhan",
+        "gender": "Male",
+        "dob": "1990-01-01"
+    },
+    "genome_sequence": "AGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTC",
+    "traits": {
+        "eye_color": "brown",
+        "blood_type": "A+",
+        "lactose_tolerance": true,
+        "height": "5'3\""
+    },
+    "analysis_date": "2025-06-30",
+    "source": "Synthetic Sample for Testing",
+    "notes": "This is a dummy genome JSON used for testing NFT minting."
+}
